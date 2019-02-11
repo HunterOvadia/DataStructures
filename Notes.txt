@@ -1,0 +1,49 @@
+- A way of organizing data to be used efficiently.
+
+- Linear: Elements form a sequence or a linear list. (Array, Linked List, Stacks, Queues)
+- Non-Linear: Traversal of nodes is nonlinear in nature. (Graph and Trees)
+
+Various operations that can be performed on data structures:
+- Insertion
+- Deletion
+- Traversal
+- Searching
+- Sorting
+
+
+Array vs Linked-List:
+- Arrays have fixed size; Linked lists are dynamic!
+- Inserting and Deleting a new element in an array is expensive.
+- Random access not allowed in a Linked List
+- Extra memory space for a pointer is required with each element of a Linked List
+- Arrays have better cache locality
+
+Stack:
+- Linear data structure that can be used as LIFO or FILO.
+	- Push, Pop, Peek
+
+Queue vs Stack:
+- Queue is linear that follows FIFO.
+	- Enqueue, Dequeue, Front, Rear
+- Difference is via Removal.
+	- In a stack, we remove the most recently added.
+	- In a queue, we remove the item least recently added.
+
+Infix, Prefix, Postfix Notation:
+- Infix Notation("Normal Notation") - Operators between operands
+	- (X + Y) (A * (B + C) / D)
+- Postfix Notation ("Reverse Polish Notation") - Operators after operand
+	- (X Y +) (A B C + * D/)
+- Prefix Notation ("Polish Notation") - Operators before operands
+	- (+ X Y) (/ * A + B C D)
+
+Linked List:
+- A linear data structure such as an array, where each element is a seperate object. Each element (Node), has the Data and a reference to the next node.
+	- Singly Linked List: Every node stores address or reference to next node and the last node is NULL.
+	- Doubly Linked List: Every node stores Data, and reference points to next and previous one.
+	- Circular Linked List: All nodes are connected to form a circle. There is no NULL.
+
+BFS vs DFS: (Breadth First vs Depth First Traversal)
+- Queue is used for BFS
+- Stack is used for DFS (or Recursion)
+
