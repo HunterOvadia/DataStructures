@@ -1,144 +1,155 @@
-/*
-A linear data structure, like an array, but each elements are linked using pointers to a memory location.
-
-  Advantages:
-  - Dynamic Size
-  - Eaze of Insertion and Deletion
-  
-  Disadvantages:
-  - Has to be accessed sequentially.
-  - With adding an element, we need extra memory space for a pointer.
-  - Not cache friendly, since not contiguous locations. (Pointers, memory can be all over)
-  
-  
-  Representated by a pointer to the first node of the list. The first node is called the head. If the list is empty, then the value of head is NULL.
-  Each Node contains:
-  1. Data
-  2. A pointer or reference to the next node.
-  
-*/
-
-
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
-struct node
+typedef struct node
 {
     int Data;
-    node *Next;
-};
+    int Key;
+    struct node *Next;
+} node;
 
+node *Head = NULL;
+node *Current = NULL;
 
-void
-PrintList(node *Node)
+void printList()
 {
-    while(Node != NULL)
-    {
-        printf("%d\n", Node->Data);
-        Node = Node->Next;
-    }
-}
-
-void
-Push(node **HeadRef, int NewData)
-{
-    node *NewNode = (node *)malloc(sizeof(node));
-    NewNode->Data = NewData;
-    NewNode->Next = *HeadRef;
-    *HeadRef = NewNode;
-}
-
-void
-InsertAfter(node *PrevNode, int NewData)
-{
-    if(PrevNode == NULL)
-        return;
-    
-    node *NewNode = (node *)malloc(sizeof(node));
-    NewNode->Data = NewData;
-    NewNode->Next = PrevNode->Next;
-    PrevNode->Next = NewNode;
-}
-
-void
-Append(node** HeadRef, int NewData)
-{
-    node *NewNode = (node *)malloc(sizeof(node));
-    node *Last = *HeadRef;
-    
-    NewNode->Data = NewData;
-    NewNode->Next = NULL;
-    
-    if(*HeadRef == NULL)
-    {
-        *HeadRef = NewNode;
-        return;
-    }
-    
-    while(Last->Next != NULL)
-    {
-        Last = Last->Next;
-    }
-    
-    Last->Next = NewNode;
-}
-
-void
-DeleteNodeAt(node **HeadRef, int Position)
-{
-    if(*HeadRef == NULL)
-        return;
-    
-    node *Temp = *HeadRef;
-    
-    if(Position == 0)
-    {
-        *HeadRef = Temp->Next;
-        free(Temp);
-        return;
-    }
-    
-    for(int i = 0; Temp != NULL && i < Position - 1; ++i)
-    {
-        Temp = Temp->Next;
-    }
-    
-    if(Temp == NULL || Temp->Next == NULL)
-        return;
-    
-    node *Next = Temp->Next->Next;
-    free(Temp->Next);
-    
-    Temp->Next = Next;
-}
-
-int
-GetCount(node *Head)
-{
-    int Count = 0;
     node *Current = Head;
+    printf("\n[ ");
+
     while(Current != NULL)
     {
-        ++Count;
+        printf(" (%d,%d) ", Current->Key, Current->Data);
         Current = Current->Next;
     }
-    
-    return(Count);
+
+    printf(" ]");
 }
 
-int 
-main()
+void insertFirst(int key, int data)
 {
-    node *Head = NULL;
+    node *Link = (node *)malloc(sizeof(node));
+
+    Link->Key = key;
+    Link->Data = data;
+
+    Link->Next = Head;
+
+    Head = Link;
+}
+
+node* deleteFirst()
+{
+    node *Temp = Head;
+    Head = Head->Next;
+    return Temp;
+}
+
+bool IsEmpty()
+{
+    return Head == NULL;
+}
+
+int Length()
+{
+    int Length = 0;
+    for(node *Current = Head; Current != NULL; Current = Current->Next)
+    {
+        ++Length;
+    }
+
+    return(Length);
+}
+
+node* Find(int Key)
+{
+    node *Current = Head;
+    if(IsEmpty())
+        return NULL;
     
-    Push(&Head, 7);
-    Push(&Head, 8);
-    Push(&Head, 3);
+    while(Current->Key != Key)
+    {
+        if(Current->Next == NULL)
+            return NULL;
+        else
+            Current = Current->Next;
+    }
+
+    return Current;
+}
+
+node* Delete(int Key)
+{
+    node *Current = Head;
+    node *Previous = NULL;
+
+    if(Head == NULL)
+        return NULL;
     
-    DeleteNodeAt(&Head, 2);
-    
-    PrintList(Head);
-    
-    system("pause");
-    return(0);
+    while(Current->Key != Key)
+    {
+        if(Current->Next == NULL)
+            return NULL;
+        else
+            Previous = Current;
+            Current = Current->Next;
+    }
+
+    if(Current == Head)
+        Head = Head->Next;
+    else
+        Previous->Next = Current->Next;
+
+    return Current;
+}
+
+void Sort()
+{
+    int k = Length();
+    node *Current;
+    node *Next;
+    int TempData;
+    int TempKey;
+
+    for(int i = 0; i < Length() - 1; i++, k--)
+    {
+        Current = Head;
+        Next = Head->Next;
+
+        for(int j = 1; j < k; j++)
+        {
+            if(Current->Data > Next->Data)
+            {
+                TempData = Current->Data;
+                Current->Data = Next->Data;
+                Next->Data = TempData;
+                
+                TempKey = Current->Key;
+                Current->Key = Next->Key;
+                Next->Key = TempKey;
+            }
+
+            Current = Current->Next;
+            Next = Next->Next;
+        }
+    }
+}
+
+
+void Reverse()
+{
+    node *Prev = NULL;
+    node *Current = Head;
+    node *Next = NULL;
+
+    while(Current != NULL)
+    {
+        Next = Current->Next;
+        Current->Next = Prev;
+        Prev = Current;
+        Current = Next;
+    }
+
+    Head = Prev;
 }

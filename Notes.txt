@@ -10,7 +10,6 @@ Various operations that can be performed on data structures:
 - Searching
 - Sorting
 
-
 Array vs Linked-List:
 - Arrays have fixed size; Linked lists are dynamic!
 - Inserting and Deleting a new element in an array is expensive.
@@ -46,4 +45,8 @@ Linked List:
 BFS vs DFS: (Breadth First vs Depth First Traversal)
 - Queue is used for BFS
 - Stack is used for DFS (or Recursion)
+
+
+Semaphore: A variable used to achieve process syncronization in a multi processing environment
+Deadlock: Where processes are blocked because each process is holding a resource and waiting for another to be acquired.
 
